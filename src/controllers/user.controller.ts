@@ -52,6 +52,7 @@ const postUpdateUser = async (req: Request, res: Response) => {
     return res.redirect("/admin/user");
 }
 
+
 export {
     getHomePage, getCreateUserPage, postCreateUser, postDeleteUser,
     getViewUser, postUpdateUser
