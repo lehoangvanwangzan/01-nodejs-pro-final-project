@@ -1,5 +1,6 @@
 import { z } from "zod";
 export const ProductSchema = z.object({
+    id: z.string().optional(),
     name: z.string().min(1, "Tên sản phẩm là bắt buộc"),
     detailDesc: z.string().min(1, "Mô tả chi tiết là bắt buộc"),
     shortDesc: z.string().min(1, "Mô tả ngắn là bắt buộc"),

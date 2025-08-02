@@ -1,18 +1,19 @@
 # Node.js Pro - @hoidanit (FINAL PROJECT)
-Full source code series Node.js Pro của tác giả Hỏi Dân IT (Eric)
+Full source code series Node.js Pro của tác giả Hoàng Văn (Eric)
+# tạo lại cở sở dữ liệu
+npx prisma generate
+npx prisma migrate dev --name update-sold
 
-===
-Môi trường chạy dự án: Node.js v22.13.0
+# chạy ứng dụng
+npm run dev
+# hoặc      
+npm run start
+# hoặc nếu bạn muốn chạy với Docker
+docker compose up -d    
+# hoặc nếu bạn muốn chạy với Docker Compose
+docker compose up -d --build    
+# git
+git add .
+git commit -m "update"
+git push origin master 
 
-## Về tác giả
-Mọi thông tin về Tác giả Hỏi Dân IT, các bạn có thể tìm kiếm tại đây:
-
-Website chính thức: https://hoidanit.vn/
-
-Youtube “Hỏi Dân IT” : https://www.youtube.com/@hoidanit
-
-Tiktok “Hỏi Dân IT” :  https://www.tiktok.com/@hoidanit
-
-Fanpage “Hỏi Dân IT” : https://www.facebook.com/askITwithERIC/
-
-Udemy Hỏi Dân IT: https://www.udemy.com/user/eric-7039/
