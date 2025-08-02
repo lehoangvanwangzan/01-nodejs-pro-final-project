@@ -1,19 +1,13 @@
 # Node.js Pro - @hoidanit (FINAL PROJECT)
-Full source code series Node.js Pro của tác giả Hoàng Văn (Eric)
+Full source code series Node.js Pro của tác giả Hỏi Dân IT (Eric)
 # tạo lại cở sở dữ liệu
 npx prisma generate
-npx prisma migrate dev --name update-sold
+npx prisma migrate dev --name update-detailDesc
 
 # chạy ứng dụng
-npm run dev
-# hoặc      
-npm run start
-# hoặc nếu bạn muốn chạy với Docker
-docker compose up -d    
-# hoặc nếu bạn muốn chạy với Docker Compose
-docker compose up -d --build    
+npm run dev   
 # git
 git add .
 git commit -m "update"
-git push origin master 
+git push origin main
 
