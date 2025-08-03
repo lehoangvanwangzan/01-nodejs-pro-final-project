@@ -8,6 +8,7 @@ import fileUploadMiddleware from 'src/middleware/multer';
 import { get } from 'http';
 import { getProductPage } from 'controllers/client/product.controller';
 import { getAdminCreateProductPage, getViewProduct, postAdminCreateProduct, postDeleteProduct, postUpdateProduct } from 'controllers/admin/product.controllers';
+import { getLoginPage, getRegisterPage, postRegister } from 'controllers/auth.controller';
 
 
 const router = express.Router();
@@ -15,9 +16,9 @@ const router = express.Router();
 const webRoutes = (app: Express) => {
     router.get("/", getHomePage);
     router.get("/product/:id", getProductPage);
-    router.post("/handle-delete-user/:id", postDeleteUser);
-    router.get("/handle-view-user/:id", getViewUser);
-    router.post("/handle-update-user", postUpdateUser);
+    router.get("/login", getLoginPage);
+    router.get("/register", getRegisterPage);
+    router.post("/register", postRegister);
 
     //admin routes
     router.get("/admin", getDashboardPage);

@@ -16,6 +16,11 @@ const initDatabase = async () => {
 
                 },
                 {
+                    name: "USER",
+                    description: "Người dùng",
+
+                },
+                {
                     name: "CLIENT",
                     description: "Khách hàng",
 
