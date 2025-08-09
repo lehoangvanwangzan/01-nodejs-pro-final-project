@@ -9,6 +9,7 @@ import { get } from 'http';
 import { getProductPage } from 'controllers/client/product.controller';
 import { getAdminCreateProductPage, getViewProduct, postAdminCreateProduct, postDeleteProduct, postUpdateProduct } from 'controllers/admin/product.controllers';
 import { getLoginPage, getRegisterPage, postRegister } from 'controllers/auth.controller';
+import passport from 'passport';
 
 
 const router = express.Router();
@@ -19,7 +20,10 @@ const webRoutes = (app: Express) => {
     router.get("/login", getLoginPage);
     router.get("/register", getRegisterPage);
     router.post("/register", postRegister);
-
+    router.post("/login", passport.authenticate('local', {
+        successRedirect: "/",
+        failureRedirect: "/login",
+    }));
     //admin routes
     router.get("/admin", getDashboardPage);
     router.get("/admin/user", getAdminUserPage);

@@ -45,7 +45,7 @@ const initDatabase = async () => {
                     {
                         fullName: "admin",
                         password: defaultPassword,
-                        username: "Admin",
+                        username: "admin@gmail.com",
                         address: "Hà Nội",
                         phone: "0123456789",
                         accountType: ACCOUNT_TYPE.SYSTEM,
