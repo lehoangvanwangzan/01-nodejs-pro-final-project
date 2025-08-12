@@ -4,8 +4,10 @@ import { registerNewUser } from "services/client/auth.service";
 import { RegisterSchema, TRegisterSchema } from "src/validation/register.schema";
 const getLoginPage = async (req: Request, res: Response) => {
     //get login
-    return res.render("client/auth/login.ejs")
-};
+    const { session } = req as any;
+    const messages = session?.messages ?? [];
+    return res.render("client/auth/login.ejs", { messages });
+}
 const getRegisterPage = async (req: Request, res: Response) => {
     //get register
     const errors = [];

@@ -5,6 +5,8 @@ import { getAllRoles, getUserById, handleCreateUser, handleDeleteUser, updateUse
 const getHomePage = async (req: Request, res: Response) => {
     //get users
     const products = await getProducts();
+    const user = req.user;
+    console.log("user", user);
     return res.render("client/home/show.ejs", { products })
 };
 

@@ -1,9 +1,15 @@
 import { prisma } from "config/client";
+import { get } from "http";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import { comparePassword } from "services/user.service";
+import { comparePassword, getUserById } from "services/user.service";
 const configPassportLocal = () => {
-    passport.use(new LocalStrategy(async function verify(username, password, callback) {
+    passport.use(new LocalStrategy({ passReqToCallback: true }, async function verify(req, username, password, callback) {
+        const { session } = req as any;
+        if (session?.messages?.length) {
+            session.messages = [];
+        }
+
         console.log("Local strategy called with username:", username, password);
         const user = await prisma.user.findUnique({
             where: { username }
@@ -19,5 +25,18 @@ const configPassportLocal = () => {
         }
         return callback(null, user);
     }));
+    passport.serializeUser(function (user: any, callback) {
+
+        callback(null, { id: user.id, username: user.username });
+
+    });
+
+    passport.deserializeUser(async function (user: any, callback) {
+        const { id, username } = user;
+        //query to database to get user by id
+        const userInDB = await getUserById(id);
+        return callback(null, { ...userInDB });
+
+    });
 }
 export default configPassportLocal;

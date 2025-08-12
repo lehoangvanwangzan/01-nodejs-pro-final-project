@@ -23,6 +23,7 @@ const webRoutes = (app: Express) => {
     router.post("/login", passport.authenticate('local', {
         successRedirect: "/",
         failureRedirect: "/login",
+        failureMessage: true
     }));
     //admin routes
     router.get("/admin", getDashboardPage);
