@@ -34,5 +34,18 @@ const registerNewUser = async (
         throw new Error("user role không tồn tại");
     }
 }
+const getUserWithRoleById = async (id: string) => {
+    const user = await prisma.user.findUnique({
+        where: { id: +id },
+        include: {
+            role: true
+        },
+        omit: {
+            password: true
+        },
+    });
 
-export { isEmailExists, registerNewUser };
+
+    return user;
+}
+export { isEmailExists, registerNewUser, getUserWithRoleById };
