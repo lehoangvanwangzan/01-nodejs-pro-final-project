@@ -10,7 +10,7 @@ import { getProductPage } from 'controllers/client/product.controller';
 import { getAdminCreateProductPage, getViewProduct, postAdminCreateProduct, postDeleteProduct, postUpdateProduct } from 'controllers/admin/product.controllers';
 import { getLoginPage, getRegisterPage, getSuccessRedirectPage, postLogout, postRegister } from 'controllers/auth.controller';
 import passport from 'passport';
-import { isAdmin, isLogin } from 'src/middleware/auth';
+import { isAdmin } from 'src/middleware/auth';
 
 
 const router = express.Router();
@@ -19,7 +19,8 @@ const webRoutes = (app: Express) => {
     router.get("/", getHomePage);
     router.get("/success-redirect", getSuccessRedirectPage);
     router.get("/product/:id", getProductPage);
-    router.get("/login", isLogin, getLoginPage);
+    // router.get("/login", isLogin, getLoginPage);
+    router.get("/login", getLoginPage);
     router.get("/register", getRegisterPage);
     router.post("/register", postRegister);
     router.post("/login", passport.authenticate('local', {
@@ -30,7 +31,8 @@ const webRoutes = (app: Express) => {
     router.post("/logout", postLogout);
 
     //admin routes
-    router.get("/admin", isAdmin, getDashboardPage);
+    // router.get("/admin", isAdmin, getDashboardPage);
+    router.get("/admin", getDashboardPage)
     router.get("/admin/user", getAdminUserPage);
     router.get("/admin/create-user", getCreateUserPage);
     router.post("/admin/handle-create-user", fileUploadMiddleware("avatar"), postCreateUser);
@@ -45,11 +47,10 @@ const webRoutes = (app: Express) => {
     router.post("/admin/create-product", fileUploadMiddleware("image", "images/product"), postAdminCreateProduct);
     router.post("/admin/update-product", fileUploadMiddleware("image", "images/product"), postUpdateProduct);
 
-
-
     router.get("/admin/order", getAdminOrderPage);
 
-    app.use("/", router);
+    // app.use("/", router);
+    app.use("/", isAdmin, router);
 }
 
 export default webRoutes;

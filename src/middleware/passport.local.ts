@@ -1,5 +1,4 @@
 import { prisma } from "config/client";
-import { get } from "http";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { getUserWithRoleById } from "services/client/auth.service";
@@ -24,7 +23,7 @@ const configPassportLocal = () => {
             // throw new Error("Incorrect password");
             return callback(null, false, { message: "Incorrect password" });
         }
-        return callback(null, user);
+        return callback(null, user as any);
     }));
     passport.serializeUser(function (user: any, callback) {
 
