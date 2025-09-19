@@ -21,21 +21,25 @@ const createProduct = async (
             target,
             ...(imageUpload && { image: imageUpload })
         }
-    });
+    })
 }
+
 const getProductList = async () => {
     return await prisma.product.findMany();
 }
-const getProductById = async (id: number) => {
-    return await prisma.product.findUnique({ where: { id } });
 
-}
 const handleDeleteProduct = async (id: number) => {
-    const result = await prisma.product.delete({
+    await prisma.product.delete({
         where: { id }
     })
-    return result;
 }
+
+const getProductById = async (id: number) => {
+    return await prisma.product.findUnique({
+        where: { id }
+    })
+}
+
 const updateProductById = async (
     id: number,
     name: string,
@@ -47,8 +51,7 @@ const updateProductById = async (
     target: string,
     imageUpload: string
 ) => {
-
-    const updatedUser = await prisma.product.update({
+    await prisma.product.update({
         where: { id },
         data: {
             name,
@@ -61,9 +64,10 @@ const updateProductById = async (
             ...(imageUpload && { image: imageUpload })
         }
     })
-
-    return updatedUser;
 }
+
+
 export {
-    createProduct, getProductList, getProductById, updateProductById, handleDeleteProduct
+    createProduct, getProductList, handleDeleteProduct,
+    getProductById, updateProductById
 }

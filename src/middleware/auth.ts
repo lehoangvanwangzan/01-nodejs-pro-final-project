@@ -1,6 +1,4 @@
-import { NextFunction, Request, Response } from "express";
-
-
+import { Request, Response, NextFunction } from "express";
 const isLogin = (req: Request, res: Response, next: NextFunction) => {
     const isAuthenticated = req.isAuthenticated();
     if (isAuthenticated) {
@@ -10,9 +8,11 @@ const isLogin = (req: Request, res: Response, next: NextFunction) => {
         next();
     }
 }
+
 const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+    //apply only to admin
     if (req.path.startsWith('/admin')) {
-        const user = req.user as any;
+        const user = req.user;
 
         if (user?.role?.name === "ADMIN") {
             next();

@@ -1,9 +1,10 @@
+import { prisma } from "config/client";
 import { hashPassword } from "services/user.service";
-import { prisma } from "./client";
-import { ACCOUNT_TYPE } from "./constant";
+import { ACCOUNT_TYPE } from "config/constant";
+
 
 const initDatabase = async () => {
-    const userCount = await prisma.user.count();
+    const countUser = await prisma.user.count();
     const countRole = await prisma.role.count();
     const countProduct = await prisma.product.count();
 
@@ -12,77 +13,44 @@ const initDatabase = async () => {
             data: [
                 {
                     name: "ADMIN",
-                    description: "Quản trị viên",
-
+                    description: "Admin thì full quyền"
                 },
                 {
                     name: "USER",
-                    description: "Người dùng",
-
+                    description: "User thông thường"
                 },
-                {
-                    name: "CLIENT",
-                    description: "Khách hàng",
-
-                },
-                {
-                    name: "STAFF",
-                    description: "Nhân viên",
-
-                }
             ]
         })
     }
-    if (userCount === 0) {
-        console.log("Seeding database...");
+
+    if (countUser === 0) {
         const defaultPassword = await hashPassword("123456");
-        const adminRoles = await prisma.role.findFirst({
+        const adminRole = await prisma.role.findFirst({
             where: { name: "ADMIN" }
         })
-        if (adminRoles) {
+        if (adminRole) {
             await prisma.user.createMany({
                 data: [
                     {
-                        fullName: "admin",
+                        fullName: "Hỏi Dân IT",
+                        username: "hoidanit@gmail.com",
                         password: defaultPassword,
+                        accountType: ACCOUNT_TYPE.SYSTEM,
+                        roleId: adminRole.id
+                    },
+                    {
+                        fullName: "Admin",
                         username: "admin@gmail.com",
-                        address: "Hà Nội",
-                        phone: "0123456789",
-                        accountType: ACCOUNT_TYPE.SYSTEM,
-                        roleId: adminRoles.id
-                    },
-                    {
-                        fullName: "Lê Hoàng Văn",
                         password: defaultPassword,
-                        username: "lehoangvan@gmail.com",
-                        address: "Cần Thơ",
-                        phone: "0123456789",
                         accountType: ACCOUNT_TYPE.SYSTEM,
-                        roleId: adminRoles.id
+                        roleId: adminRole.id
                     },
-                    {
-                        fullName: "Lê Hoàn Vũ",
-                        password: defaultPassword,
-                        username: "lehoanvu@gmail.com",
-                        address: "Hà Nội",
-                        phone: "0123456789",
-                        accountType: ACCOUNT_TYPE.SYSTEM,
-                        roleId: adminRoles.id
-                    },
-                    {
-                        fullName: "Lê Hoàn Vũu",
-                        password: defaultPassword,
-                        username: "lehoanvuu@gmail.com",
-                        address: "Hà Nộii",
-                        phone: "01234567899",
-                        accountType: ACCOUNT_TYPE.SYSTEM,
-                        roleId: adminRoles.id
-                    }
-
                 ]
             })
         }
+
     }
+
     if (countProduct === 0) {
         const products = [
             {
@@ -186,12 +154,16 @@ const initDatabase = async () => {
                 image: "1711081278418-dell-02.png"
             }
         ];
+
         await prisma.product.createMany({
             data: products
         })
     }
-    if (countRole !== 0 && userCount !== 0 && countProduct !== 0) {
+
+    if (countRole !== 0 && countUser !== 0 && countProduct !== 0) {
         console.log(">>> ALREADY INIT DATA...");
     }
+
 }
+
 export default initDatabase;

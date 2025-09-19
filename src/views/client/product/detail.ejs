@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>
-        <%=product.name%> - Hoàng Văn
+        <%= product.name %>- Laptopshop
     </title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
@@ -55,17 +55,17 @@
                             <div class="col-lg-6">
                                 <div class="border rounded">
                                     <a href="#">
-                                        <img src="/images/product/<%=product.image%>" class="img-fluid rounded"
+                                        <img src="/images/product/<%= product.image %>" class="img-fluid rounded"
                                             alt="Image">
                                     </a>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <h4 class="fw-bold mb-3">
-                                    <%=product.name%>
+                                    <%= product.name %>
                                 </h4>
                                 <p class="mb-3">
-                                    <%=product.shortDesc%>
+                                    <%= product.shortDesc %>
                                 </p>
                                 <h5 class="fw-bold mb-3">
                                     <%= new Intl.NumberFormat('vi-VN', { style: 'currency' , currency: 'VND'
@@ -76,8 +76,10 @@
                                     <i class="fa fa-star text-secondary"></i>
                                     <i class="fa fa-star text-secondary"></i>
                                     <i class="fa fa-star text-secondary"></i>
-                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star text-secondary"></i>
                                 </div>
+
+
                                 <div class="input-group quantity mb-5" style="width: 100px;">
                                     <div class="input-group-btn">
                                         <button class="btn btn-sm btn-minus rounded-circle bg-light border">
@@ -109,12 +111,9 @@
                                     <div class="tab-pane active" id="nav-about" role="tabpanel"
                                         aria-labelledby="nav-about-tab">
                                         <p>
-                                            <%=product.detailDesc%>
+                                            <%= product.detailDesc %>
                                         </p>
-
-
                                     </div>
-
                                 </div>
                             </div>
 
@@ -163,6 +162,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
         <!-- Single Product End -->

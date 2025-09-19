@@ -2,38 +2,42 @@ import { prisma } from "config/client"
 import { ACCOUNT_TYPE } from "config/constant";
 import { comparePassword, hashPassword } from "services/user.service";
 
-const isEmailExists = async (email: string) => {
+const isEmailExist = async (email: string) => {
     const user = await prisma.user.findUnique({
         where: { username: email }
     })
-    if (user) {
-        return true;
-    }
+
+    if (user) { return true; }
     return false;
 }
+
 const registerNewUser = async (
     fullName: string,
     email: string,
     password: string
 ) => {
+
     const newPassword = await hashPassword(password);
+
     const userRole = await prisma.role.findUnique({
-        where: { name: "CLIENT" }
+        where: { name: "USER" }
     })
+
     if (userRole) {
         await prisma.user.create({
             data: {
                 username: email,
-                fullName: fullName,
                 password: newPassword,
+                fullName: fullName,
                 accountType: ACCOUNT_TYPE.SYSTEM,
-                roleId: userRole.id,
+                roleId: userRole.id
             }
-        });
+        })
     } else {
-        throw new Error("user role không tồn tại");
+        throw new Error("User Role không tồn tại.")
     }
 }
+
 const getUserWithRoleById = async (id: string) => {
     const user = await prisma.user.findUnique({
         where: { id: +id },
@@ -48,4 +52,6 @@ const getUserWithRoleById = async (id: string) => {
 
     return user;
 }
-export { isEmailExists, registerNewUser, getUserWithRoleById };
+export {
+    registerNewUser, isEmailExist, getUserWithRoleById
+}
