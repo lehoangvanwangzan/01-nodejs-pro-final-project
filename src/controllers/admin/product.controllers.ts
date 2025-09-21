@@ -1,6 +1,7 @@
 import { create } from "domain";
 import { Request, Response } from "express";
 import { createProduct, getProductById, handleDeleteProduct, updateProductById } from "services/admin/product.service";
+import { deleteProductInCart } from "services/client/item.service";
 import { TProductSchema, ProductSchema } from "src/validation/product.schema";
 const getAdminCreateProductPage = async (req: Request, res: Response) => {
     const errors = [];
@@ -76,7 +77,20 @@ const postUpdateProduct = async (req: Request, res: Response) => {
         +quantity, factory, target, image);
     return res.redirect("/admin/product");
 }
+const postDeleteProductInCart = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const user = req.user;
+
+    if (user) {
+        await deleteProductInCart(+id, user.id, user.sumCart);
+    } else {
+        return res.redirect("/login");
+    }
+
+    return res.redirect("/cart");
+}
+
 export {
-    getAdminCreateProductPage, getViewProduct,
+    getAdminCreateProductPage, getViewProduct, postDeleteProductInCart,
     postAdminCreateProduct, postDeleteProduct, postUpdateProduct
 }
